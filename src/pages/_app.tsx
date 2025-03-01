@@ -1,26 +1,32 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import Head from 'next/head';
-import theme from '../theme';
-import { AppProps } from 'next/app';
-import { GoogleAnalytics } from 'nextjs-google-analytics';
+"use client"
+
+import { useEffect } from "react"
+import { ChakraProvider } from "@chakra-ui/react"
+import theme from "../theme"
+import type { AppProps } from "next/app"
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js").then(
+          (registration) => {
+            console.log("Service Worker registration successful with scope: ", registration.scope)
+          },
+          (err) => {
+            console.log("Service Worker registration failed: ", err)
+          },
+        )
+      })
+    }
+  }, [])
+
   return (
-    <>
-      <Head>
-        <title>My Youtube Collection</title>
-        <meta
-          name='discription'
-          content='Beautiful and minimal player as an abstraction of Youtube Playlist, 
-          allowing users to play audiovisual content on the card intuitively.'
-        />
-      </Head>
-      <ChakraProvider theme={theme}>
-        <GoogleAnalytics trackPageViews strategy='lazyOnload' />
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </>
-  );
+    <ChakraProvider theme={theme}>
+      <Component {...pageProps} />
+    </ChakraProvider>
+  )
 }
 
-export default MyApp;
+export default MyApp
+
