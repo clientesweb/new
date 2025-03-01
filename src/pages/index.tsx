@@ -1,9 +1,21 @@
 "use client"
 
 import { useState } from "react"
-import { Box, VStack, HStack, Heading, Text, Image, AspectRatio, Button } from "@chakra-ui/react"
-import { Navigation } from "../components/Navigation"
+import {
+  Box,
+  VStack,
+  HStack,
+  Heading,
+  Text,
+  Image,
+  AspectRatio,
+  Button,
+  SimpleGrid,
+  useColorModeValue,
+} from "@chakra-ui/react"
+import { Layout } from "../components/Layout"
 import { CustomVideoPlayer } from "../components/CustomVideoPlayer"
+import { motion } from "framer-motion"
 import type { GetStaticProps } from "next"
 import type { Data } from "../lib/types"
 
@@ -60,97 +72,131 @@ export const getStaticProps: GetStaticProps<{ data: Data[] }> = async () => {
   }
 }
 
+const MotionBox = motion(Box)
+
 const Index = ({ data }) => {
   const [currentVideo, setCurrentVideo] = useState(data && data.length > 0 ? data[0] : null)
+  const bgColor = useColorModeValue("white", "gray.800")
+  const textColor = useColorModeValue("gray.800", "white")
 
   return (
-    <Box pb={20}>
-      {" "}
-      {/* Add padding at the bottom for the navigation bar */}
-      <VStack spacing={8} align="stretch">
+    <Layout>
+      <VStack spacing={8} align="stretch" px={4}>
         {/* Banner publicitario */}
-        <Box bg="brand.500" p={4} textAlign="center">
-          <Text fontSize="lg" fontWeight="bold">
+        <Box
+          bg="brand.500"
+          p={4}
+          borderRadius="xl"
+          color="white"
+          boxShadow="xl"
+          as={motion.div}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Text fontSize="lg" fontWeight="bold" textAlign="center">
             ¡Oferta especial! Suscríbete ahora y obtén un 20% de descuento
           </Text>
         </Box>
 
         {/* Reproductor de video principal */}
         {currentVideo && (
-          <Box>
+          <MotionBox initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <CustomVideoPlayer
               src={`https://www.youtube.com/watch?v=${currentVideo.snippet.resourceId.videoId}`}
               poster={currentVideo.snippet.thumbnails.high.url}
             />
-            <Box p={4}>
-              <Heading size="md">{currentVideo.snippet.title}</Heading>
-              <Text mt={2}>{currentVideo.snippet.description}</Text>
+            <Box p={4} bg={bgColor} borderRadius="xl" mt={4} boxShadow="md">
+              <Heading size="md" color={textColor}>
+                {currentVideo.snippet.title}
+              </Heading>
+              <Text mt={2} color={textColor}>
+                {currentVideo.snippet.description}
+              </Text>
             </Box>
-          </Box>
+          </MotionBox>
         )}
 
         {/* Parrilla de programas */}
         <Box>
-          <Heading size="lg" mb={4}>
+          <Heading size="lg" mb={4} color={textColor}>
             Parrilla de Programas
           </Heading>
-          <HStack overflowX="auto" spacing={4} p={4}>
+          <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={4}>
             {data.map((video: Data) => (
-              <Box key={video.id} w="200px" flexShrink={0}>
+              <MotionBox key={video.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <AspectRatio ratio={16 / 9}>
                   <Image
                     src={video.snippet.thumbnails.high.url || "/placeholder.svg"}
                     alt={video.snippet.title}
                     objectFit="cover"
+                    borderRadius="xl"
                   />
                 </AspectRatio>
-                <Text mt={2} fontWeight="bold" noOfLines={2}>
+                <Text mt={2} fontWeight="bold" noOfLines={2} color={textColor}>
                   {video.snippet.title}
                 </Text>
-                <Button mt={2} size="sm" onClick={() => setCurrentVideo(video)}>
+                <Button mt={2} size="sm" onClick={() => setCurrentVideo(video)} colorScheme="brand" width="full">
                   Ver ahora
                 </Button>
-              </Box>
+              </MotionBox>
             ))}
-          </HStack>
+          </SimpleGrid>
         </Box>
 
         {/* Shorts */}
         <Box>
-          <Heading size="lg" mb={4}>
+          <Heading size="lg" mb={4} color={textColor}>
             Shorts
           </Heading>
-          <HStack overflowX="auto" spacing={4} p={4}>
-            {/* Aquí irían los shorts, por ahora usaremos datos de ejemplo */}
+          <HStack overflowX="auto" spacing={4} pb={4}>
             {[1, 2, 3, 4, 5].map((i) => (
-              <Box key={i} w="120px" h="200px" bg="gray.700" borderRadius="md" flexShrink={0}>
-                <Text textAlign="center" lineHeight="200px">
-                  Short {i}
-                </Text>
-              </Box>
+              <MotionBox key={i} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Box
+                  w="120px"
+                  h="200px"
+                  bg="brand.500"
+                  borderRadius="xl"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Text textAlign="center" color="white" fontWeight="bold">
+                    Short {i}
+                  </Text>
+                </Box>
+              </MotionBox>
             ))}
           </HStack>
         </Box>
 
         {/* Sponsors */}
         <Box>
-          <Heading size="lg" mb={4}>
+          <Heading size="lg" mb={4} color={textColor}>
             Sponsors
           </Heading>
-          <HStack justify="center" spacing={8} p={4}>
-            {/* Aquí irían los logos de los sponsors */}
-            {[1, 2, 3].map((i) => (
-              <Box key={i} w="100px" h="100px" bg="gray.700" borderRadius="full">
-                <Text textAlign="center" lineHeight="100px">
-                  Sponsor {i}
-                </Text>
-              </Box>
+          <SimpleGrid columns={{ base: 2, sm: 3, md: 4 }} spacing={8}>
+            {[1, 2, 3, 4].map((i) => (
+              <MotionBox key={i} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Box
+                  w="100%"
+                  aspectRatio={1}
+                  bg={bgColor}
+                  borderRadius="full"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  boxShadow="md"
+                >
+                  <Text textAlign="center" color={textColor} fontWeight="bold">
+                    Sponsor {i}
+                  </Text>
+                </Box>
+              </MotionBox>
             ))}
-          </HStack>
+          </SimpleGrid>
         </Box>
       </VStack>
-      <Navigation />
-    </Box>
+    </Layout>
   )
 }
 
