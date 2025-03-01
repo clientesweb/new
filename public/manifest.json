@@ -1,33 +1,39 @@
 {
   "name": "Café Club TV",
   "short_name": "Café Club TV",
-  "scope": "/",
-  "start_url": "/",
-  "theme_color": "#C41E3A",
-  "background_color": "#FFFFFF",
-  "display": "standalone",
   "description": "Tu destino de entretenimiento con la mejor programación, shorts y contenido exclusivo.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#C41E3A",
+  "theme_color": "#C41E3A",
+  "orientation": "portrait",
   "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "/maskable_icon_x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    },
+    {
+      "src": "/maskable_icon.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
