@@ -1,61 +1,49 @@
 import { extendTheme } from "@chakra-ui/react"
-import "@fontsource/kumbh-sans"
-
-const breakpoints = {
-  sm: "40em",
-  md: "52em",
-  lg: "64em",
-  xl: "80em",
-}
+import { mode } from "@chakra-ui/theme-tools"
 
 const theme = extendTheme({
-  semanticTokens: {
-    colors: {
-      text: {
-        default: "#16161D",
-        _dark: "#EDEDEE",
-      },
-      heroGradientStart: {
-        default: "#C41E3A",
-        _dark: "#780000",
-      },
-      heroGradientEnd: {
-        default: "#FF0000",
-        _dark: "#C41E3A",
-      },
-      brand: {
-        default: "#C41E3A",
-        _dark: "#C41E3A",
-      },
-      brandSecondary: {
-        default: "#FFFFFF",
-        _dark: "#FFFFFF",
-      },
-    },
-    radii: {
-      button: "xl",
-    },
-  },
-  colors: {
-    black: "#16161D",
-    brand: {
-      50: "#FFE5E5",
-      100: "#FFB8B8",
-      200: "#FF8A8A",
-      300: "#FF5C5C",
-      400: "#FF2E2E",
-      500: "#C41E3A", // Primary brand color
-      600: "#B31B35",
-      700: "#8B1529",
-      800: "#630F1D",
-      900: "#3B0911",
-    },
+  config: {
+    initialColorMode: "dark",
+    useSystemColorMode: false,
   },
   fonts: {
-    heading: `"Kumbh Sans", sans-serif`,
-    body: `"Kumbh Sans", sans-serif`,
+    heading: '"Inter", sans-serif',
+    body: '"Inter", sans-serif',
   },
-  breakpoints,
+  colors: {
+    brand: {
+      50: "#ffe5e5",
+      100: "#fbb8b8",
+      200: "#f48a8a",
+      300: "#ed5c5c",
+      400: "#e62e2e",
+      500: "#c41e3a", // Primary brand color
+      600: "#a11530",
+      700: "#7e0d26",
+      800: "#5b061c",
+      900: "#390012",
+    },
+  },
+  styles: {
+    global: (props) => ({
+      body: {
+        bg: mode("gray.50", "gray.900")(props),
+        color: mode("gray.800", "whiteAlpha.900")(props),
+      },
+    }),
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        borderRadius: "full",
+      },
+    },
+    Card: {
+      baseStyle: {
+        borderRadius: "xl",
+      },
+    },
+  },
 })
 
 export default theme
