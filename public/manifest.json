@@ -1,12 +1,12 @@
 {
-  "name": "My Youtube Collection",
-  "short_name": "My Youtube Collection",
+  "name": "Café Club TV",
+  "short_name": "Café Club TV",
   "scope": "/",
   "start_url": "/",
-  "theme_color": "#fff",
-  "background_color": "#fff",
+  "theme_color": "#C41E3A",
+  "background_color": "#FFFFFF",
   "display": "standalone",
-  "description": "A Youtube playlist app.",
+  "description": "Tu destino de entretenimiento con la mejor programación, shorts y contenido exclusivo.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -31,3 +31,4 @@
     }
   ]
 }
+
